@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lee.mapper.MyCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.lee.domain.MyComment" >
+    <id column="mycomment_id" property="mycommentId" jdbcType="INTEGER" />
+    <result column="mycomment_content" property="mycommentContent" jdbcType="VARCHAR" />
+    <result column="mycomment_publish_time" property="myCommentPublishTime" jdbcType="TIMESTAMP" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler" />
+    <result column="mycomment_post" property="mycommentPost" jdbcType="INTEGER" />
+    <result column="mycomment_parent" property="mycommentParent" jdbcType="INTEGER" />
+    <result column="mycomment_publisher" property="mycommentPublisher" jdbcType="VARCHAR" />
+    <result column="mycomment_delete" property="mycommentDelete" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.myCommentPublishTimeCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler} and #{criterion.secondValue,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.myCommentPublishTimeCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler} and #{criterion.secondValue,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mycomment_id, mycomment_content, mycomment_publish_time, mycomment_post, mycomment_parent, 
+    mycomment_publisher, mycomment_delete
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lee.domain.MyCommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mycomment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mycomment
+    where mycomment_id = #{mycommentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mycomment
+    where mycomment_id = #{mycommentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lee.domain.MyCommentExample" >
+    delete from mycomment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lee.domain.MyComment" >
+    insert into mycomment (mycomment_id, mycomment_content, mycomment_publish_time, 
+      mycomment_post, mycomment_parent, mycomment_publisher, 
+      mycomment_delete)
+    values (#{mycommentId,jdbcType=INTEGER}, #{mycommentContent,jdbcType=VARCHAR}, #{myCommentPublishTime,jdbcType=TIMESTAMP,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler}, 
+      #{mycommentPost,jdbcType=INTEGER}, #{mycommentParent,jdbcType=INTEGER}, #{mycommentPublisher,jdbcType=VARCHAR}, 
+      #{mycommentDelete,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lee.domain.MyComment" >
+    insert into mycomment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mycommentId != null" >
+        mycomment_id,
+      </if>
+      <if test="mycommentContent != null" >
+        mycomment_content,
+      </if>
+      <if test="myCommentPublishTime != null" >
+        mycomment_publish_time,
+      </if>
+      <if test="mycommentPost != null" >
+        mycomment_post,
+      </if>
+      <if test="mycommentParent != null" >
+        mycomment_parent,
+      </if>
+      <if test="mycommentPublisher != null" >
+        mycomment_publisher,
+      </if>
+      <if test="mycommentDelete != null" >
+        mycomment_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mycommentId != null" >
+        #{mycommentId,jdbcType=INTEGER},
+      </if>
+      <if test="mycommentContent != null" >
+        #{mycommentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="myCommentPublishTime != null" >
+        #{myCommentPublishTime,jdbcType=TIMESTAMP,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler},
+      </if>
+      <if test="mycommentPost != null" >
+        #{mycommentPost,jdbcType=INTEGER},
+      </if>
+      <if test="mycommentParent != null" >
+        #{mycommentParent,jdbcType=INTEGER},
+      </if>
+      <if test="mycommentPublisher != null" >
+        #{mycommentPublisher,jdbcType=VARCHAR},
+      </if>
+      <if test="mycommentDelete != null" >
+        #{mycommentDelete,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lee.domain.MyCommentExample" resultType="java.lang.Integer" >
+    select count(*) from mycomment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mycomment
+    <set >
+      <if test="record.mycommentId != null" >
+        mycomment_id = #{record.mycommentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.mycommentContent != null" >
+        mycomment_content = #{record.mycommentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.myCommentPublishTime != null" >
+        mycomment_publish_time = #{record.myCommentPublishTime,jdbcType=TIMESTAMP,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler},
+      </if>
+      <if test="record.mycommentPost != null" >
+        mycomment_post = #{record.mycommentPost,jdbcType=INTEGER},
+      </if>
+      <if test="record.mycommentParent != null" >
+        mycomment_parent = #{record.mycommentParent,jdbcType=INTEGER},
+      </if>
+      <if test="record.mycommentPublisher != null" >
+        mycomment_publisher = #{record.mycommentPublisher,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mycommentDelete != null" >
+        mycomment_delete = #{record.mycommentDelete,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mycomment
+    set mycomment_id = #{record.mycommentId,jdbcType=INTEGER},
+      mycomment_content = #{record.mycommentContent,jdbcType=VARCHAR},
+      mycomment_publish_time = #{record.myCommentPublishTime,jdbcType=TIMESTAMP,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler},
+      mycomment_post = #{record.mycommentPost,jdbcType=INTEGER},
+      mycomment_parent = #{record.mycommentParent,jdbcType=INTEGER},
+      mycomment_publisher = #{record.mycommentPublisher,jdbcType=VARCHAR},
+      mycomment_delete = #{record.mycommentDelete,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lee.domain.MyComment" >
+    update mycomment
+    <set >
+      <if test="mycommentContent != null" >
+        mycomment_content = #{mycommentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="myCommentPublishTime != null" >
+        mycomment_publish_time = #{myCommentPublishTime,jdbcType=TIMESTAMP,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler},
+      </if>
+      <if test="mycommentPost != null" >
+        mycomment_post = #{mycommentPost,jdbcType=INTEGER},
+      </if>
+      <if test="mycommentParent != null" >
+        mycomment_parent = #{mycommentParent,jdbcType=INTEGER},
+      </if>
+      <if test="mycommentPublisher != null" >
+        mycomment_publisher = #{mycommentPublisher,jdbcType=VARCHAR},
+      </if>
+      <if test="mycommentDelete != null" >
+        mycomment_delete = #{mycommentDelete,jdbcType=CHAR},
+      </if>
+    </set>
+    where mycomment_id = #{mycommentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lee.domain.MyComment" >
+    update mycomment
+    set mycomment_content = #{mycommentContent,jdbcType=VARCHAR},
+      mycomment_publish_time = #{myCommentPublishTime,jdbcType=TIMESTAMP,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler},
+      mycomment_post = #{mycommentPost,jdbcType=INTEGER},
+      mycomment_parent = #{mycommentParent,jdbcType=INTEGER},
+      mycomment_publisher = #{mycommentPublisher,jdbcType=VARCHAR},
+      mycomment_delete = #{mycommentDelete,jdbcType=CHAR}
+    where mycomment_id = #{mycommentId,jdbcType=INTEGER}
+  </update>
+</mapper>

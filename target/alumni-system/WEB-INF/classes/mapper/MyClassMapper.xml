@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lee.mapper.MyClassMapper" >
+  <resultMap id="BaseResultMap" type="com.lee.domain.MyClass" >
+    <id column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="class_grade" property="classGrade" jdbcType="CHAR" />
+    <result column="class_class" property="classClass" jdbcType="CHAR" />
+    <result column="class_major" property="classMajor" jdbcType="VARCHAR" />
+    <result column="class_creator" property="classCreator" jdbcType="VARCHAR" />
+    <result column="class_number_of_member" property="classNumberOfMember" jdbcType="INTEGER" />
+    <result column="class_introduction" property="classIntroduction" jdbcType="VARCHAR" />
+    <result column="class_create_time" property="classCreateTime" jdbcType="DATE" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.classCreateTimeCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler} and #{criterion.secondValue,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.classCreateTimeCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler} and #{criterion.secondValue,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    class_id, class_grade, class_class, class_major, class_creator, class_number_of_member, 
+    class_introduction, class_create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lee.domain.MyClassExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from class
+    where class_id = #{classId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from class
+    where class_id = #{classId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lee.domain.MyClassExample" >
+    delete from class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lee.domain.MyClass" useGeneratedKeys="true" keyProperty="classId">
+    insert into class (class_id, class_grade, class_class, 
+      class_major, class_creator, class_number_of_member, 
+      class_introduction, class_create_time
+      )
+    values (#{classId,jdbcType=INTEGER}, #{classGrade,jdbcType=CHAR}, #{classClass,jdbcType=CHAR}, 
+      #{classMajor,jdbcType=VARCHAR}, #{classCreator,jdbcType=VARCHAR}, #{classNumberOfMember,jdbcType=INTEGER}, 
+      #{classIntroduction,jdbcType=VARCHAR}, #{classCreateTime,jdbcType=DATE,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lee.domain.MyClass" >
+    insert into class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="classGrade != null" >
+        class_grade,
+      </if>
+      <if test="classClass != null" >
+        class_class,
+      </if>
+      <if test="classMajor != null" >
+        class_major,
+      </if>
+      <if test="classCreator != null" >
+        class_creator,
+      </if>
+      <if test="classNumberOfMember != null" >
+        class_number_of_member,
+      </if>
+      <if test="classIntroduction != null" >
+        class_introduction,
+      </if>
+      <if test="classCreateTime != null" >
+        class_create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="classGrade != null" >
+        #{classGrade,jdbcType=CHAR},
+      </if>
+      <if test="classClass != null" >
+        #{classClass,jdbcType=CHAR},
+      </if>
+      <if test="classMajor != null" >
+        #{classMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="classCreator != null" >
+        #{classCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="classNumberOfMember != null" >
+        #{classNumberOfMember,jdbcType=INTEGER},
+      </if>
+      <if test="classIntroduction != null" >
+        #{classIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="classCreateTime != null" >
+        #{classCreateTime,jdbcType=DATE,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lee.domain.MyClassExample" resultType="java.lang.Integer" >
+    select count(*) from class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update class
+    <set >
+      <if test="record.classId != null" >
+        class_id = #{record.classId,jdbcType=INTEGER},
+      </if>
+      <if test="record.classGrade != null" >
+        class_grade = #{record.classGrade,jdbcType=CHAR},
+      </if>
+      <if test="record.classClass != null" >
+        class_class = #{record.classClass,jdbcType=CHAR},
+      </if>
+      <if test="record.classMajor != null" >
+        class_major = #{record.classMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classCreator != null" >
+        class_creator = #{record.classCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classNumberOfMember != null" >
+        class_number_of_member = #{record.classNumberOfMember,jdbcType=INTEGER},
+      </if>
+      <if test="record.classIntroduction != null" >
+        class_introduction = #{record.classIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classCreateTime != null" >
+        class_create_time = #{record.classCreateTime,jdbcType=DATE,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update class
+    set class_id = #{record.classId,jdbcType=INTEGER},
+      class_grade = #{record.classGrade,jdbcType=CHAR},
+      class_class = #{record.classClass,jdbcType=CHAR},
+      class_major = #{record.classMajor,jdbcType=VARCHAR},
+      class_creator = #{record.classCreator,jdbcType=VARCHAR},
+      class_number_of_member = #{record.classNumberOfMember,jdbcType=INTEGER},
+      class_introduction = #{record.classIntroduction,jdbcType=VARCHAR},
+      class_create_time = #{record.classCreateTime,jdbcType=DATE,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lee.domain.MyClass" >
+    update class
+    <set >
+      <if test="classGrade != null" >
+        class_grade = #{classGrade,jdbcType=CHAR},
+      </if>
+      <if test="classClass != null" >
+        class_class = #{classClass,jdbcType=CHAR},
+      </if>
+      <if test="classMajor != null" >
+        class_major = #{classMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="classCreator != null" >
+        class_creator = #{classCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="classNumberOfMember != null" >
+        class_number_of_member = #{classNumberOfMember,jdbcType=INTEGER},
+      </if>
+      <if test="classIntroduction != null" >
+        class_introduction = #{classIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="classCreateTime != null" >
+        class_create_time = #{classCreateTime,jdbcType=DATE,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler},
+      </if>
+    </set>
+    where class_id = #{classId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lee.domain.MyClass" >
+    update class
+    set class_grade = #{classGrade,jdbcType=CHAR},
+      class_class = #{classClass,jdbcType=CHAR},
+      class_major = #{classMajor,jdbcType=VARCHAR},
+      class_creator = #{classCreator,jdbcType=VARCHAR},
+      class_number_of_member = #{classNumberOfMember,jdbcType=INTEGER},
+      class_introduction = #{classIntroduction,jdbcType=VARCHAR},
+      class_create_time = #{classCreateTime,jdbcType=DATE,typeHandler=org.apache.ibatis.type.LocalDateTypeHandler}
+    where class_id = #{classId,jdbcType=INTEGER}
+  </update>
+</mapper>

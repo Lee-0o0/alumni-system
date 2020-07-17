@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lee.mapper.AlumniMapper" >
+  <resultMap id="BaseResultMap" type="com.lee.domain.Alumni" >
+    <id column="alumni_number" property="alumniNumber" jdbcType="VARCHAR" />
+    <result column="alumni_name" property="alumniName" jdbcType="VARCHAR" />
+    <result column="alumni_gender" property="alumniGender" jdbcType="CHAR" />
+    <result column="alumni_grade" property="alumniGrade" jdbcType="CHAR" />
+    <result column="alumni_major" property="alumniMajor" jdbcType="VARCHAR" />
+    <result column="alumni_city" property="alumniCity" jdbcType="VARCHAR" />
+    <result column="alumni_phone" property="alumniPhone" jdbcType="VARCHAR" />
+    <result column="alumni_mail" property="alumniMail" jdbcType="VARCHAR" />
+    <result column="alumni_company" property="alumniCompany" jdbcType="VARCHAR" />
+    <result column="alumni_motto" property="alumniMotto" jdbcType="VARCHAR" />
+    <result column="alumni_class" property="alumniClass" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    alumni_number, alumni_name, alumni_gender, alumni_grade, alumni_major, alumni_city, 
+    alumni_phone, alumni_mail, alumni_company, alumni_motto, alumni_class
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lee.domain.AlumniExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from alumni
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from alumni
+    where alumni_number = #{alumniNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from alumni
+    where alumni_number = #{alumniNumber,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lee.domain.AlumniExample" >
+    delete from alumni
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lee.domain.Alumni" >
+    insert into alumni (alumni_number, alumni_name, alumni_gender, 
+      alumni_grade, alumni_major, alumni_city, 
+      alumni_phone, alumni_mail, alumni_company, 
+      alumni_motto, alumni_class)
+    values (#{alumniNumber,jdbcType=VARCHAR}, #{alumniName,jdbcType=VARCHAR}, #{alumniGender,jdbcType=CHAR}, 
+      #{alumniGrade,jdbcType=CHAR}, #{alumniMajor,jdbcType=VARCHAR}, #{alumniCity,jdbcType=VARCHAR}, 
+      #{alumniPhone,jdbcType=VARCHAR}, #{alumniMail,jdbcType=VARCHAR}, #{alumniCompany,jdbcType=VARCHAR}, 
+      #{alumniMotto,jdbcType=VARCHAR}, #{alumniClass,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lee.domain.Alumni" >
+    insert into alumni
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="alumniNumber != null" >
+        alumni_number,
+      </if>
+      <if test="alumniName != null" >
+        alumni_name,
+      </if>
+      <if test="alumniGender != null" >
+        alumni_gender,
+      </if>
+      <if test="alumniGrade != null" >
+        alumni_grade,
+      </if>
+      <if test="alumniMajor != null" >
+        alumni_major,
+      </if>
+      <if test="alumniCity != null" >
+        alumni_city,
+      </if>
+      <if test="alumniPhone != null" >
+        alumni_phone,
+      </if>
+      <if test="alumniMail != null" >
+        alumni_mail,
+      </if>
+      <if test="alumniCompany != null" >
+        alumni_company,
+      </if>
+      <if test="alumniMotto != null" >
+        alumni_motto,
+      </if>
+      <if test="alumniClass != null" >
+        alumni_class,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="alumniNumber != null" >
+        #{alumniNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniName != null" >
+        #{alumniName,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniGender != null" >
+        #{alumniGender,jdbcType=CHAR},
+      </if>
+      <if test="alumniGrade != null" >
+        #{alumniGrade,jdbcType=CHAR},
+      </if>
+      <if test="alumniMajor != null" >
+        #{alumniMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniCity != null" >
+        #{alumniCity,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniPhone != null" >
+        #{alumniPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniMail != null" >
+        #{alumniMail,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniCompany != null" >
+        #{alumniCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniMotto != null" >
+        #{alumniMotto,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniClass != null" >
+        #{alumniClass,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lee.domain.AlumniExample" resultType="java.lang.Integer" >
+    select count(*) from alumni
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update alumni
+    <set >
+      <if test="record.alumniNumber != null" >
+        alumni_number = #{record.alumniNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alumniName != null" >
+        alumni_name = #{record.alumniName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alumniGender != null" >
+        alumni_gender = #{record.alumniGender,jdbcType=CHAR},
+      </if>
+      <if test="record.alumniGrade != null" >
+        alumni_grade = #{record.alumniGrade,jdbcType=CHAR},
+      </if>
+      <if test="record.alumniMajor != null" >
+        alumni_major = #{record.alumniMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alumniCity != null" >
+        alumni_city = #{record.alumniCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alumniPhone != null" >
+        alumni_phone = #{record.alumniPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alumniMail != null" >
+        alumni_mail = #{record.alumniMail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alumniCompany != null" >
+        alumni_company = #{record.alumniCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alumniMotto != null" >
+        alumni_motto = #{record.alumniMotto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alumniClass != null" >
+        alumni_class = #{record.alumniClass,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update alumni
+    set alumni_number = #{record.alumniNumber,jdbcType=VARCHAR},
+      alumni_name = #{record.alumniName,jdbcType=VARCHAR},
+      alumni_gender = #{record.alumniGender,jdbcType=CHAR},
+      alumni_grade = #{record.alumniGrade,jdbcType=CHAR},
+      alumni_major = #{record.alumniMajor,jdbcType=VARCHAR},
+      alumni_city = #{record.alumniCity,jdbcType=VARCHAR},
+      alumni_phone = #{record.alumniPhone,jdbcType=VARCHAR},
+      alumni_mail = #{record.alumniMail,jdbcType=VARCHAR},
+      alumni_company = #{record.alumniCompany,jdbcType=VARCHAR},
+      alumni_motto = #{record.alumniMotto,jdbcType=VARCHAR},
+      alumni_class = #{record.alumniClass,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lee.domain.Alumni" >
+    update alumni
+    <set >
+      <if test="alumniName != null" >
+        alumni_name = #{alumniName,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniGender != null" >
+        alumni_gender = #{alumniGender,jdbcType=CHAR},
+      </if>
+      <if test="alumniGrade != null" >
+        alumni_grade = #{alumniGrade,jdbcType=CHAR},
+      </if>
+      <if test="alumniMajor != null" >
+        alumni_major = #{alumniMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniCity != null" >
+        alumni_city = #{alumniCity,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniPhone != null" >
+        alumni_phone = #{alumniPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniMail != null" >
+        alumni_mail = #{alumniMail,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniCompany != null" >
+        alumni_company = #{alumniCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniMotto != null" >
+        alumni_motto = #{alumniMotto,jdbcType=VARCHAR},
+      </if>
+      <if test="alumniClass != null" >
+        alumni_class = #{alumniClass,jdbcType=INTEGER},
+      </if>
+    </set>
+    where alumni_number = #{alumniNumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lee.domain.Alumni" >
+    update alumni
+    set alumni_name = #{alumniName,jdbcType=VARCHAR},
+      alumni_gender = #{alumniGender,jdbcType=CHAR},
+      alumni_grade = #{alumniGrade,jdbcType=CHAR},
+      alumni_major = #{alumniMajor,jdbcType=VARCHAR},
+      alumni_city = #{alumniCity,jdbcType=VARCHAR},
+      alumni_phone = #{alumniPhone,jdbcType=VARCHAR},
+      alumni_mail = #{alumniMail,jdbcType=VARCHAR},
+      alumni_company = #{alumniCompany,jdbcType=VARCHAR},
+      alumni_motto = #{alumniMotto,jdbcType=VARCHAR},
+      alumni_class = #{alumniClass,jdbcType=INTEGER}
+    where alumni_number = #{alumniNumber,jdbcType=VARCHAR}
+  </update>
+</mapper>
